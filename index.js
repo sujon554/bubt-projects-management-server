@@ -42,6 +42,22 @@ async function run() {
       res.send(users)
     });
 
+     //singleProduct
+     app.get("/projects/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const project = await projectCollection.findOne(query);
+      res.json(project);
+    });
+
+    //delete watch from all
+    app.delete("/projects/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const project = await projectCollection.deleteOne(query);
+      res.json(project);
+    });
+
    //    *****************
     //   ////////// USER **********
     //   *****************
