@@ -14,7 +14,6 @@ app.use(express.json());
 const uri = "mongodb+srv://bubtProject:U4RPSNUQinvqEPeR@cluster0.ad0jo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-console.log(uri);
 
 
 async function run() {
@@ -23,6 +22,7 @@ async function run() {
     console.log("database connected with BUBT Projects");
     const database = client.db("bubtProject");
     const projectCollection = database.collection("projects");
+    const myprojectsCollection = database.collection("myprojects");
     const userCollection = database.collection("users");
 
     //POST API to Project
@@ -45,6 +45,10 @@ async function run() {
    //    *****************
     //   ////////// USER **********
     //   *****************
+
+
+
+
      //POST API For Users
      app.post("/users", async (req, res) => {
       const user = req.body;
@@ -91,6 +95,62 @@ async function run() {
         isAdmin = true;
       }
       res.json({ admin: isAdmin });
+    });
+
+
+      //    *****************
+    //   ////////// Project  **********
+    //   *****************
+
+    //POST API For Project
+    app.post("/allprojects", async (req, res) => {
+      const project = req.body;
+      const result = await myprojectsCollection.insertOne(project);
+      res.json(result);
+    });
+
+    //GET All Project API
+    app.get("/allprojects", async (req, res) => {
+      const cursor = myprojectsCollection.find({});
+      const project = await cursor.toArray();
+      res.json(project);
+    });
+
+     //Update Approved
+     app.put("/updateStatus/:id", (req, res) => {
+      const id = req.params.id;
+      const updatedStatus = req.body.status;
+      const filter = { _id: ObjectId(id) };
+      orderCollection
+        .updateOne(filter, {
+          $set: { bookedServiceStatus: updatedStatus },
+        })
+        .then((result) => {
+          res.send(result);
+        });
+    });
+    
+
+     //Get My Orders by email
+     app.get("/myprojects", async (req, res) => {
+      let query = {};
+      const email = req.query.email;
+      if (email) {
+        query = { userEmail: email };
+      }
+      const cursor = projectCollection.find(query);
+      const project = await cursor.toArray();
+      res.json(project);
+    });
+
+    //Delete My Orders
+    app.delete("/myprojects/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("Deleted Order", id);
+      const query = { _id: ObjectId(id) };
+      const result = await projectCollection.deleteOne(query);
+      console.log("Deleted", result);
+      res.json(result);
     });
 
 
