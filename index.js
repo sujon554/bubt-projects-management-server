@@ -91,6 +91,29 @@ async function run() {
       res.json(result);
     });
 
+   //Make supervisor 
+    app.put("/users/supervisor", async (req, res) => {
+      const user = req.body;
+      console.log("put", user);
+      const filter = { email: user.email };
+      const updateDoc = { $set: { role: "supervisor" } };
+      const result = await userCollection.updateOne(filter, updateDoc);
+      res.json(result);
+    });
+
+    //supervisor Verfication
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      let isSupervisor = false;
+      if (user?.role === "supervisor") {
+        isSupervisor = true;
+      }
+      res.json({ supervisor: isSupervisor });
+    });
+	
+
     //Make Admin
     app.put("/users/admin", async (req, res) => {
       const user = req.body;
