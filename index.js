@@ -92,7 +92,7 @@ async function run() {
     });
 
    //Make supervisor 
-    app.put("/users/supervisor", async (req, res) => {
+   {/*  app.put("/users/supervisor", async (req, res) => {
       const user = req.body;
       console.log("put", user);
       const filter = { email: user.email };
@@ -111,8 +111,8 @@ async function run() {
         isSupervisor = true;
       }
       res.json({ supervisor: isSupervisor });
-    });
-	
+    }); 
+   */}
 
     //Make Admin
     app.put("/users/admin", async (req, res) => {
