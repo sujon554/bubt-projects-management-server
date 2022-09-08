@@ -92,7 +92,7 @@ async function run() {
     });
 
    //Make supervisor 
-   {/*  app.put("/users/supervisor", async (req, res) => {
+    app.put("/users/supervisor", async (req, res) => {
       const user = req.body;
       console.log("put", user);
       const filter = { email: user.email };
@@ -100,7 +100,7 @@ async function run() {
       const result = await userCollection.updateOne(filter, updateDoc);
       res.json(result);
     });
-
+      {/*
     //supervisor Verfication
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
@@ -111,7 +111,7 @@ async function run() {
         isSupervisor = true;
       }
       res.json({ supervisor: isSupervisor });
-    }); 
+    });
    */}
 
     //Make Admin
