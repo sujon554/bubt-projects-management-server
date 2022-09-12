@@ -35,7 +35,12 @@ async function run() {
           console.log(result);
           res.json(result);
       });
-
+      //POST Request Project for students
+      app.get("/reqproject", async(req, res) => {
+          const cursor = requestCollection.find({});
+          const users = await cursor.toArray();
+          res.send(users)
+      });
 
 
       //POST API to Project
