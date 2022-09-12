@@ -30,18 +30,31 @@ async function run() {
       //POST Request Project for students
       app.post("/reqproject", async (req, res) => {
           const reqproject = req.body;
-          console.log(reqproject);
           const result = await requestCollection.insertOne(reqproject);
           console.log(result);
           res.json(result);
       });
-      //POST Request Project for students
+
+      //GET Request Project for students
       app.get("/reqproject", async(req, res) => {
           const cursor = requestCollection.find({});
           const users = await cursor.toArray();
           res.send(users)
       });
 
+      //Update Approved Request Project for students
+      app.put("/requestapproval/:id", (req, res) => {
+          const id = req.params.id;
+          const updatedStatus = req.body.status;
+          const filter = { _id: ObjectId(id) };
+          requestCollection
+              .updateOne(filter, {
+                  $set: { bookedServiceStatus: updatedStatus },
+              })
+              .then((result) => {
+                  res.send(result);
+              });
+      });
 
       //POST API to Project
     app.post("/projects", async (req, res) => {
