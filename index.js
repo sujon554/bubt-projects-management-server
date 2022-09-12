@@ -24,7 +24,7 @@ async function run() {
     const projectCollection = database.collection("projects");
     const myprojectsCollection = database.collection("myprojects");
     const userCollection = database.collection("users");
-      const requestCollection = database.collection("reqproject");
+      const requestCollection = database.collection("reqestedproj");
 
 
       //POST Request Project for students
