@@ -24,8 +24,21 @@ async function run() {
     const projectCollection = database.collection("projects");
     const myprojectsCollection = database.collection("myprojects");
     const userCollection = database.collection("users");
+      const requestCollection = database.collection("reqproject");
 
-    //POST API to Project
+
+      //POST Request Project for students
+      app.post("/reqproject", async (req, res) => {
+          const reqproject = req.body;
+          console.log(reqproject);
+          const result = await requestCollection.insertOne(reqproject);
+          console.log(result);
+          res.json(result);
+      });
+
+
+
+      //POST API to Project
     app.post("/projects", async (req, res) => {
      const project = req.body;
      console.log(project);
@@ -124,7 +137,7 @@ async function run() {
       res.json(result);
     });
 
-    //Admin Verfication
+    //Admin and supervisor Verfication
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
