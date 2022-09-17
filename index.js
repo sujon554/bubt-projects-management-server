@@ -39,19 +39,19 @@ async function run() {
           res.send(users)
       });
 
-      //Update Approved Request Project for students
-      // app.put("/requestapproval/:id", (req, res) => {
-      //     const id = req.params.id;
-      //     const updatedStatus = req.body.status;
-      //     const filter = { _id: ObjectId(id) };
-      //     requestCollection
-      //         .updateOne(filter, {
-      //             $set: { bookedServiceStatus: updatedStatus },
-      //         })
-      //         .then((result) => {
-      //             res.send(result);
-      //         });
-      // });
+      Update Approved Request Project for students
+      app.put("/requestapproval/:id", (req, res) => {
+          const id = req.params.id;
+          const updatedStatus = req.body.status;
+          const filter = { _id: ObjectId(id) };
+          requestCollection
+              .updateOne(filter, {
+                  $set: { bookedServiceStatus: updatedStatus },
+              })
+              .then((result) => {
+                  res.send(result);
+              });
+      });
 
       //POST API to Project
     app.post("/projects", async (req, res) => {
@@ -152,22 +152,22 @@ async function run() {
       res.json(result);
     });
 
-    //Admin and supervisor Verfication
-    // app.get("/users/:email", async (req, res) => {
-    //   const email = req.params.email;
-    //   const query = { email: email };
-    //   const user = await userCollection.findOne(query);
-    //   let isAdmin = false;
-    //   let isSupervisor = false;
-    //   if (user?.role === "admin") {
-    //     isAdmin = true;
-    //       res.json({ admin: isAdmin });
-    //   } else if (user?.role === "supervisor") {
-    //       isSupervisor = true;
-    //       res.json({ supervisor: isSupervisor });
-    //   }
-    //
-    // });
+    Admin and supervisor Verfication
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      let isAdmin = false;
+      let isSupervisor = false;
+      if (user?.role === "admin") {
+        isAdmin = true;
+          res.json({ admin: isAdmin });
+      } else if (user?.role === "supervisor") {
+          isSupervisor = true;
+          res.json({ supervisor: isSupervisor });
+      }
+
+    });
 
 
       //    *****************
