@@ -39,7 +39,7 @@ async function run() {
           res.send(users)
       });
 
-      Update Approved Request Project for students
+      // Update Approved Request Project for students
       app.put("/requestapproval/:id", (req, res) => {
           const id = req.params.id;
           const updatedStatus = req.body.status;
@@ -152,7 +152,7 @@ async function run() {
       res.json(result);
     });
 
-    Admin and supervisor Verfication
+    // Admin and supervisor Verfication
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
