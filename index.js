@@ -22,6 +22,23 @@ async function run() {
     const myprojectsCollection = database.collection("myprojects");
     const userCollection = database.collection("users");
       const requestCollection = database.collection("reqestedproj");
+      const studentCollection = database.collection("studentReq");
+
+
+      //POST Request Project for students to supervisor
+      app.post("/studentReq", async (req, res) => {
+          const studentReq = req.body;
+          const result = await studentCollection.insertOne(studentReq);
+          res.json(result);
+      });
+
+      //GET Request Project for students supervisor
+      app.get("/studentReq", async(req, res) => {
+          const cursor = studentCollection.find({});
+          const users = await cursor.toArray();
+          res.send(users)
+      });
+
 
 
       //POST Request Project for students
