@@ -39,6 +39,19 @@ async function run() {
           res.send(users)
       });
 
+      // Update Approved Request Project for students to supervisor
+      app.put("/studentsreqapproval/:id", (req, res) => {
+          const id = req.params.id;
+          const updatedStatus = req.body.status;
+          const filter = { _id: ObjectId(id) };
+          studentCollection
+              .updateOne(filter, {
+                  $set: { bookedServiceStatus: updatedStatus },
+              })
+              .then((result) => {
+                  res.send(result);
+              });
+      });
 
 
       //POST Request Project for students
