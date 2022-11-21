@@ -69,6 +69,14 @@ async function run() {
           res.send(users)
       });
 
+       //GET Request Project for single Item
+       app.get("/reqproject/:id", async(req, res) => {
+        const id = req.params.id;
+        const query = {_id: ObjectId(id)};
+        const cursor = await requestCollection.findOne(query);
+        res.send(cursor)
+    });
+
       // Update Approved Request Project for students
       app.put("/requestapproval/:id", (req, res) => {
           const id = req.params.id;
@@ -92,6 +100,19 @@ async function run() {
       res.json(result);
     });
 
+
+     //singleProduct by Email wise
+     app.get("/singleProduct", async (req, res) => {
+      let query = {};
+      const email = req.query.email;
+      if(email) {
+        query = {userEmail: email};
+      }
+      
+      const project =  projectCollection.find(query);
+      const singleProduct = await project.toArray()
+      res.json(singleProduct);
+    });
 
     // GET API From Projects 
     app.get("/projects", async(req, res) => {
@@ -128,7 +149,6 @@ async function run() {
       const user = req.body;
       console.log(user);
       const result = await userCollection.insertOne(user);
-      console.log(result);
       res.json(result);
     });
 
